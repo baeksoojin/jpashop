@@ -25,7 +25,7 @@ public class Order {
     private Member member;
 
     @OneToMany(mappedBy ="order", cascade = ALL) //orderItems의 order column으로 mapping한다는 의미 -> 읽기전용
-    private List<OderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch= LAZY, cascade = ALL)
     @JoinColumn(name="delivery_id")
@@ -35,6 +35,21 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // 주문상태로 [order, cancel]로 생성
 
+    //연관관계 편의를 위한 메서드 => 양방향 연관관계 등록시 편의를 위해 작성//
+    public void setMember(Member member){
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery){
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 
 
 }
