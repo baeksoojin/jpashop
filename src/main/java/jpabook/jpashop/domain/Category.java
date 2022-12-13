@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter @Setter
 public class Category {
@@ -27,7 +29,7 @@ public class Category {
     //객체에서는 컬렉션으로 다대다가 가능하지만 관계형 디비는 양쪽에 컬렉션 관계를 가질 수 없어서 매핑 테이블을 만들어줘야함
     private List<Item> items = new ArrayList<>();
 
-    @ManyToOne //category가 부모 카테고리는 하나만 가질 수 있어서 다대일
+    @ManyToOne(fetch= LAZY) //category가 부모 카테고리는 하나만 가질 수 있어서 다대일
     @JoinColumn(name="parent_id")
     private Category parent;
 

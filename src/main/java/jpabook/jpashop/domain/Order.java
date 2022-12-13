@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name="Orders")
 @Getter
@@ -17,14 +19,14 @@ public class Order {
     @Column(name ="order_id")
     private Long id;
 
-    @ManyToOne //FK
+    @ManyToOne(fetch= LAZY) //FK
     @JoinColumn(name="member_id")
     private Member member;
 
     @OneToMany(mappedBy ="order") //orderItems의 order column으로 mapping한다는 의미 -> 읽기전용
     private List<OderItem> orderItems = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch= LAZY)
     @JoinColumn(name="delivery_id")
     private Delivery delivery;
     private LocalDateTime orderDate; //DateTime과 달리 annotation이 필요없음
