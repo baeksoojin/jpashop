@@ -43,4 +43,14 @@ public class OrderService {
         return order.getId();
     }
 
+    //주문취소
+    @Transactional
+    public void cancelOrder(Long orderId){
+        //주문 엔티티 저회
+        Order order = orderRepository.findOne(orderId);
+        //주문 취소
+        order.cancel();
+    }
+
+
 }
